@@ -3,16 +3,16 @@ plugins {
     id 'groovy'
     id 'com.github.johnrengelman.shadow' version '1.2.3'
 }
-apply plugin: 'maven-publish'
-
-
-group = 'io.ehdev.conrad.client'
+apply from: "$rootDir/gradle/publishing.gradle"
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 
 repositories {
-    mavenLocal()
     mavenCentral()
+
+    maven {
+        url 'http://repo.ehdev.io/maven2'
+    }
 }
 
 dependencies {
@@ -39,23 +39,9 @@ shadowJar {
 
 publishing {
     publications {
-        mavenJava(MavenPublication) {
-            from components.java
-        }
-
         shadow(MavenPublication) {
             from components.java
             artifact shadowJar
-        }
-    }
-
-    repositories {
-        maven {
-            url "s3://ehdev-maven-repo/maven2"
-            credentials(AwsCredentials) {
-                accessKey project.hasProperty("s3.accessKey") ? project.property("s3.accessKey") : ""
-                secretKey project.hasProperty("s3.secretKey") ? project.property("s3.secretKey") : ""
-            }
         }
     }
 }

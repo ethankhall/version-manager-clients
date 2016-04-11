@@ -1,1 +1,4 @@
-version = '0.0.1-SNAPSHOT'
+allprojects {
+    group = 'io.ehdev.conrad.client'
+    version = '0.0.1-SNAPSHOT'
+}
