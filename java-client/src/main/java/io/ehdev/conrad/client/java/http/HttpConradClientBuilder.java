@@ -11,6 +11,8 @@ import okhttp3.Request;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
+import java.util.concurrent.TimeUnit;
+
 public class HttpConradClientBuilder {
 
     public static final String X_AUTH_TOKEN = "X-AUTH-TOKEN";
@@ -38,6 +40,9 @@ public class HttpConradClientBuilder {
                 return chain.proceed(request);
             });
         }
+        okHttpClientBuilder.connectTimeout(10, TimeUnit.SECONDS);
+        okHttpClientBuilder.readTimeout(10, TimeUnit.SECONDS);
+        okHttpClientBuilder.writeTimeout(10, TimeUnit.SECONDS);
 
         ObjectMapper kotlinObjectMapper = new ObjectMapper();
         kotlinObjectMapper.registerModule(new KotlinModule());
