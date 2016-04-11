@@ -1,0 +1,61 @@
+plugins {
+    id 'java'
+    id 'groovy'
+    id 'com.github.johnrengelman.shadow' version '1.2.3'
+}
+apply plugin: 'maven-publish'
+
+
+group = 'io.ehdev.conrad.client'
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    compile 'org.apache.commons:commons-lang3:3.4'
+    compile ('org.eclipse.jgit:org.eclipse.jgit:4.1.0.201509280440-r') {
+        exclude group: 'org.apache.httpcomponents', module: 'httpclient'
+    }
+
+    compile 'io.ehdev.conrad:rest-model:0.0.1-SNAPSHOT'
+    compile 'com.squareup.retrofit2:retrofit:2.0.1'
+    compile 'com.squareup.retrofit2:converter-jackson:2.0.1'
+    compile 'com.squareup.okhttp3:okhttp:3.2.0'
+
+    testCompile 'org.spockframework:spock-core:1.0-groovy-2.4'
+    testCompile 'com.squareup.okhttp3:mockwebserver:3.2.0'
+}
+
+shadowJar {
+    relocate 'com.fasterxml.jackson', 'jarjar.com.fasterxml.jackson'
+    relocate 'org.apache', 'jarjar.org.apache'
+    relocate 'retrofit2', 'jarjar.retrofit2'
+    relocate 'okhttp3', 'jarjar.okhttp3'
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+
+        shadow(MavenPublication) {
+            from components.java
+            artifact shadowJar
+        }
+    }
+
+    repositories {
+        maven {
+            url "s3://ehdev-maven-repo/maven2"
+            credentials(AwsCredentials) {
+                accessKey project.hasProperty("s3.accessKey") ? project.property("s3.accessKey") : ""
+                secretKey project.hasProperty("s3.secretKey") ? project.property("s3.secretKey") : ""
+            }
+        }
+    }
+}

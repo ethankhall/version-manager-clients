@@ -1,0 +1,18 @@
+apply plugin: 'java'
+apply plugin: 'groovy'
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+dependencies {
+    compile gradleApi()
+    compile project(path: ':java-client', configuration: 'shadow')
+
+    testCompile('org.spockframework:spock-core:1.0-groovy-2.4') {
+        exclude group: 'org.codehaus.groovy'
+    }
+    testCompile 'com.squareup.okhttp3:mockwebserver:3.2.0'
+    testCompile 'com.netflix.nebula:nebula-test:3.1.0'
+}

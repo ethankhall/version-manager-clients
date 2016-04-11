@@ -1,0 +1,15 @@
+{
+  "commitId": "3",
+  "version": "0.0.2",
+  "links": [
+    {
+      "rel": "self",
+      "href": "http://localhost:8080/api/v1/project/test-project/repo/packer-builder/version/0.0.2"
+    }
+  ],
+  "versionParts": [
+    "0",
+    "0"
+  ],
+  "postfix": null
+}
