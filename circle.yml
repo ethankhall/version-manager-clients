@@ -1,23 +1,19 @@
-general:
-    branches:
-      only:
-          - master
-
 machine:
     java:
         version: oraclejdk8
-
-dependencies:
-    pre:
-        - ./gradlew claimVersion --refresh-dependencies
 
 test:
     override:
         - ./gradlew --stop
         - ./gradlew check --console=plain
-        - ./gradlew publish -Ps3.accessKey=$S3_ACCESS_KEY -Ps3.secretKey=$S3_SECRET_KEY --console=plain
-
     post:
         - mkdir -p $CIRCLE_TEST_REPORTS/junit
         - find . -maxdepth 5 -name 'TEST-*.xml' -exec cp {} $CIRCLE_TEST_REPORTS/junit/ \;
 
+
+deployment:
+    master:
+        branch: master
+        commands:
+          - ./gradlew claimVersion --refresh-dependencies
+          - ./gradlew publish -Ps3.accessKey=$S3_ACCESS_KEY -Ps3.secretKey=$S3_SECRET_KEY --console=plain
