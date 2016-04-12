@@ -20,5 +20,4 @@ allprojects {
 versionManager {
     projectName = 'ethankhall'
     repoName = 'version-manager-clients'
-    authToken = project.hasProperty('versionManager.authToken') ? project.property('versionManager.authToken') : null
 }
