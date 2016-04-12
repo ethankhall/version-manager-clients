@@ -1,4 +1,24 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        maven {
+            url 'http://repo.ehdev.io/maven2'
+        }
+    }
+    dependencies {
+        classpath 'io.ehdev.conrad.client:gradle-client:+'
+    }
+}
+
+apply plugin: 'version-manager'
+
 allprojects {
     group = 'io.ehdev.conrad.client'
-    version = '0.0.1-SNAPSHOT'
+}
+
+versionManager {
+    projectName = 'ethankhall'
+    repoName = 'version-manager-clients'
+    authToken = project.hasProperty('versionManager.authToken') ? project.property('versionManager.authToken') : null
 }
