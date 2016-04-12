@@ -44,6 +44,7 @@ public class DefaultGitManager implements GitManager {
     @Override
     public void tag(String version) throws GitAPIException {
         git.tag().setName(String.format("v%s", version)).call();
+        git.push().setPushTags().call();
     }
 
     @Override
