@@ -1,13 +1,13 @@
 buildscript {
     repositories {
-        mavenLocal()
         mavenCentral()
+        mavenLocal()
         maven {
             url 'http://repo.ehdev.io/maven2'
         }
     }
     dependencies {
-        classpath 'io.ehdev.conrad.client:gradle-client:+'
+        classpath 'io.ehdev.conrad.client:gradle-client:0.0.2'
     }
 }
 
