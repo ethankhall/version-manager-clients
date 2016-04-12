@@ -7,7 +7,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'io.ehdev.conrad.client:gradle-client:0.0.2'
+        classpath 'io.ehdev.conrad.client:gradle-client:+'
     }
 }
 

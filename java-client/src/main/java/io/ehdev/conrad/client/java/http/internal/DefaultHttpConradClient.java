@@ -7,6 +7,7 @@ import io.ehdev.conrad.model.commit.CommitIdCollection;
 import io.ehdev.conrad.model.version.CreateVersionRequest;
 import io.ehdev.conrad.model.version.CreateVersionResponse;
 import io.ehdev.conrad.model.version.VersionSearchResponse;
+import org.apache.commons.lang3.StringUtils;
 import retrofit2.Response;
 
 import java.io.IOException;
@@ -27,9 +28,16 @@ public class DefaultHttpConradClient implements HttpConradClient {
 
     @Override
     public VersionEntry claimVersion(String commitId, String message, List<String> history) throws IOException {
+        if (StringUtils.isBlank(repoDetails.authToken)) {
+            throw new RuntimeException("The auth token is not set. Please set the API via VERSION_MANAGER_AUTH_TOKEN or versionManager.authToken");
+        }
+
         CreateVersionRequest createVersionRequest = new CreateVersionRequest(history, message, commitId);
         Response<CreateVersionResponse> execute = conradRetrofitService.claimVersion(repoDetails.projectName, repoDetails.repoName, createVersionRequest).execute();
 
+        if(!execute.isSuccessful()) {
+            throw new RuntimeException("Unable to claim version");
+        }
         CreateVersionResponse response = execute.body();
         return new VersionEntry(response.getVersionParts(), response.getPostfix(), response.getCommitId());
     }
