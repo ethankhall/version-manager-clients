@@ -47,11 +47,11 @@ public class DefaultGitConradClient implements ConradClient {
             VersionEntry currentVersion = httpConradClient.getCurrentVersion(gitManager.findCommitsFromHead(historyLength));
 
             if (!StringUtils.equals(currentVersion.getCommitId(), gitManager.getHeadCommitDetails().getId())) {
-                return currentVersion.toSnapshot();
+                return currentVersion.toNextSnapshot();
             }
 
             if (gitManager.hasChanges()) {
-                return currentVersion.toSnapshot();
+                return currentVersion.toNextSnapshot();
             }
 
             return currentVersion;

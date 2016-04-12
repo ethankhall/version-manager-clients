@@ -21,7 +21,7 @@ dependencies {
         exclude group: 'org.apache.httpcomponents', module: 'httpclient'
     }
 
-    compile 'io.ehdev.conrad:rest-model:0.0.1-SNAPSHOT'
+    compile 'io.ehdev.conrad:rest-model:2.+'
     compile 'com.squareup.retrofit2:retrofit:2.0.1'
     compile 'com.squareup.retrofit2:converter-jackson:2.0.1'
     compile 'com.squareup.okhttp3:okhttp:3.2.0'

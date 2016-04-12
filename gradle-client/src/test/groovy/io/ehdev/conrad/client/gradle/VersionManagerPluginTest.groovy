@@ -1,7 +1,5 @@
 package io.ehdev.conrad.client.gradle
 
-import groovy.json.JsonBuilder
-import io.ehdev.conrad.model.version.GetVersionResponse
 import nebula.test.PluginProjectSpec
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
@@ -25,17 +23,6 @@ class VersionManagerPluginTest extends PluginProjectSpec {
         then:
         null != project.getExtensions().findByName('versionManager')
         null != project.getExtensions().findByType(VersionManagerExtension)
-    }
-
-    def 'version resolve happens as expected'() {
-        when:
-        project.apply plugin: pluginName
-
-        def commitModel = new GetVersionResponse('1', '1.2.5-SNAPSHOT')
-        configureProject(project.getExtensions().getByType(VersionManagerExtension), new JsonBuilder(commitModel).toString())
-
-        then:
-        project.getVersion().toString() == '1.2.5-SNAPSHOT'
     }
 
     @Unroll
