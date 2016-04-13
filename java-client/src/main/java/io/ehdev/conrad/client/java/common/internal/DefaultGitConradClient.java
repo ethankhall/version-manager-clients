@@ -2,14 +2,15 @@ package io.ehdev.conrad.client.java.common.internal;
 
 import io.ehdev.conrad.client.java.common.ConradClient;
 import io.ehdev.conrad.client.java.exception.ConradException;
-import io.ehdev.conrad.client.java.git.CommitDetails;
-import io.ehdev.conrad.client.java.git.GitManager;
 import io.ehdev.conrad.client.java.http.HttpConradClient;
 import io.ehdev.conrad.client.java.http.VersionEntry;
+import io.ehdev.conrad.client.java.scm.CommitDetails;
+import io.ehdev.conrad.client.java.scm.ScmManager;
+import io.ehdev.conrad.client.java.scm.git.GitManager;
 import org.apache.commons.lang3.StringUtils;
-import org.eclipse.jgit.api.errors.GitAPIException;
 
 import java.io.IOException;
+import java.util.List;
 
 public class DefaultGitConradClient implements ConradClient {
 
@@ -24,16 +25,25 @@ public class DefaultGitConradClient implements ConradClient {
     @Override
     public VersionEntry claimVersion() throws ConradException {
         try {
-            CommitDetails headCommitDetails = gitManager.getHeadCommitDetails();
-            VersionEntry versionEntry = httpConradClient.claimVersion(headCommitDetails.getId(),
-                    headCommitDetails.getMessage(),
-                    gitManager.findCommitsFromHead(50));
-
-            gitManager.tag(versionEntry.getVersion());
-            return versionEntry;
-        } catch (GitAPIException | IOException e) {
+            CommitDetails headCommitDetails = gitManager.getCurrentCommitDetails();
+            return claimVersion(headCommitDetails.getId(), headCommitDetails.getMessage(), gitManager.getPreviousCommitIds(50));
+        } catch (IOException e) {
             throw new ConradException(e);
         }
+    }
+
+    @Override
+    public VersionEntry claimVersion(String commitId, String message, List<String> historyIds) throws ConradException {
+        try {
+            return httpConradClient.claimVersion(commitId, message, historyIds);
+        } catch (IOException e) {
+            throw new ConradException(e);
+        }
+    }
+
+    @Override
+    public void tagVersion(VersionEntry versionEntry) throws ConradException {
+        gitManager.tag(versionEntry);
     }
 
     @Override
@@ -44,9 +54,9 @@ public class DefaultGitConradClient implements ConradClient {
     @Override
     public VersionEntry getCurrentVersion(int historyLength) throws ConradException {
         try {
-            VersionEntry currentVersion = httpConradClient.getCurrentVersion(gitManager.findCommitsFromHead(historyLength));
+            VersionEntry currentVersion = httpConradClient.getCurrentVersion(gitManager.getPreviousCommitIds(historyLength));
 
-            if (!StringUtils.equals(currentVersion.getCommitId(), gitManager.getHeadCommitDetails().getId())) {
+            if (!StringUtils.equals(currentVersion.getCommitId(), gitManager.getCurrentCommitDetails().getId())) {
                 return currentVersion.toNextSnapshot();
             }
 
@@ -55,8 +65,13 @@ public class DefaultGitConradClient implements ConradClient {
             }
 
             return currentVersion;
-        } catch (IOException | GitAPIException e) {
+        } catch (IOException e) {
             throw new ConradException(e);
         }
+    }
+
+    @Override
+    public ScmManager getScmManager() {
+        return gitManager;
     }
 }

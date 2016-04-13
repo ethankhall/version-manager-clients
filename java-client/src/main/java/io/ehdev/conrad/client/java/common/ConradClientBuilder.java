@@ -2,8 +2,8 @@ package io.ehdev.conrad.client.java.common;
 
 import io.ehdev.conrad.client.java.RepoDetails;
 import io.ehdev.conrad.client.java.common.internal.DefaultGitConradClient;
-import io.ehdev.conrad.client.java.git.GitManager;
-import io.ehdev.conrad.client.java.git.GitManagerBuilder;
+import io.ehdev.conrad.client.java.scm.git.GitManager;
+import io.ehdev.conrad.client.java.scm.git.GitManagerBuilder;
 import io.ehdev.conrad.client.java.http.HttpConradClient;
 import io.ehdev.conrad.client.java.http.HttpConradClientBuilder;
 

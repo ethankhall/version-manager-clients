@@ -1,6 +1,6 @@
-package io.ehdev.conrad.client.java.git;
+package io.ehdev.conrad.client.java.scm.git;
 
-import io.ehdev.conrad.client.java.git.internal.DefaultGitManager;
+import io.ehdev.conrad.client.java.scm.git.internal.DefaultGitManager;
 
 import java.io.File;
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package io.ehdev.conrad.client.java.git;
+package io.ehdev.conrad.client.java.scm;
 
 public class CommitDetails {
 
