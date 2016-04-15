@@ -4,6 +4,8 @@ import io.ehdev.conrad.client.java.exception.ScmException;
 import io.ehdev.conrad.client.java.http.VersionEntry;
 import io.ehdev.conrad.client.java.scm.CommitDetails;
 import io.ehdev.conrad.client.java.scm.git.GitManager;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.Status;
 import org.eclipse.jgit.api.errors.GitAPIException;
@@ -60,7 +62,10 @@ public class DefaultGitManager implements GitManager {
     @Override
     public void tag(VersionEntry version) throws ScmException {
         try {
-            git.tag().setName(String.format("v%s", version.getVersion())).call();
+            git.tag()
+                .setAnnotated(true)
+                .setName(String.format("v%s", version.getVersion()))
+                .setMessage("Tagged by Crom at " + ZonedDateTime.now().toString());
             git.push().setPushTags().call();
         } catch (GitAPIException e) {
             throw new ScmException(e);
