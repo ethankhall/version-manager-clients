@@ -65,7 +65,8 @@ public class DefaultGitManager implements GitManager {
             git.tag()
                 .setAnnotated(true)
                 .setName(String.format("v%s", version.getVersion()))
-                .setMessage("Tagged by Crom at " + ZonedDateTime.now().toString());
+                .setMessage("Tagged by Crom at " + ZonedDateTime.now().toString())
+                .call();
             git.push().setPushTags().call();
         } catch (GitAPIException e) {
             throw new ScmException(e);
