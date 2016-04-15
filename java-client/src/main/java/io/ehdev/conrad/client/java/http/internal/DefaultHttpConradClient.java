@@ -1,5 +1,6 @@
 package io.ehdev.conrad.client.java.http.internal;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.ehdev.conrad.client.java.RepoDetails;
 import io.ehdev.conrad.client.java.http.HttpConradClient;
 import io.ehdev.conrad.client.java.http.VersionEntry;
@@ -19,6 +20,8 @@ public class DefaultHttpConradClient implements HttpConradClient {
     private final RepoDetails repoDetails;
     private final ConradRetrofitService conradRetrofitService;
 
+    private final ObjectMapper objectMapper = new ObjectMapper();
+
     private static final VersionEntry FALLBACK_VERSION = new VersionEntry(Arrays.asList("0", "0", "0"), null, "<unknown>");
 
     public DefaultHttpConradClient(RepoDetails repoDetails, ConradRetrofitService conradRetrofitService) {
@@ -35,8 +38,17 @@ public class DefaultHttpConradClient implements HttpConradClient {
         CreateVersionRequest createVersionRequest = new CreateVersionRequest(history, message, commitId);
         Response<CreateVersionResponse> execute = conradRetrofitService.claimVersion(repoDetails.projectName, repoDetails.repoName, createVersionRequest).execute();
 
+        if(execute.code() == 401) {
+            throw new RuntimeException("The token that you used was not accepted, check that it is valid.");
+        }
         if(!execute.isSuccessful()) {
-            throw new RuntimeException("Unable to claim version: "  + execute.errorBody().string());
+            try {
+                ErrorResponse err = objectMapper.readValue(execute.errorBody().string(), ErrorResponse.class);
+                throw new RuntimeException(
+                    String.format("(HTTP %d) Error %s: %s", err.getStatus(), err.getErrorCode(), err.getMessage()));
+            } catch(Exception e) {
+                throw new RuntimeException("Unable to claim version: " + execute.errorBody().string());
+            }
         }
         CreateVersionResponse response = execute.body();
         return new VersionEntry(response.getVersionParts(), response.getPostfix(), response.getCommitId());
