@@ -15,6 +15,7 @@ apply plugin: 'version-manager'
 
 allprojects {
     group = 'io.ehdev.conrad.client'
+    buildDir = new File(rootDir, "build/${it.path.substring(1).replace(":", "/")}")
 }
 
 versionManager {
