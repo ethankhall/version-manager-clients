@@ -36,7 +36,7 @@ public class DefaultHttpConradClient implements HttpConradClient {
         Response<CreateVersionResponse> execute = conradRetrofitService.claimVersion(repoDetails.projectName, repoDetails.repoName, createVersionRequest).execute();
 
         if(!execute.isSuccessful()) {
-            throw new RuntimeException("Unable to claim version");
+            throw new RuntimeException("Unable to claim version: "  + execute.errorBody().string());
         }
         CreateVersionResponse response = execute.body();
         return new VersionEntry(response.getVersionParts(), response.getPostfix(), response.getCommitId());
