@@ -15,5 +15,5 @@ deployment:
     master:
         branch: master
         commands:
-          - ./gradlew claimVersion --refresh-dependencies
+          - ./gradlew claimVersion --refresh-dependencies  --console=plain
           - ./gradlew publish -Ps3.accessKey=$S3_ACCESS_KEY -Ps3.secretKey=$S3_SECRET_KEY --console=plain
