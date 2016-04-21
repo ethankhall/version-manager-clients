@@ -12,7 +12,7 @@ public interface ConradClient {
      * This implementation calls to {@link #claimVersion(String, String, List)} with the commit id,
      * message for the commit and the last 50 commitIds
      * @return the version claimed
-     * @throws ConradException
+     * @throws ConradException wrapping all exceptions
      */
     VersionEntry claimVersion() throws ConradException;
 
@@ -27,7 +27,7 @@ public interface ConradClient {
      * @param historyIds a list of id's to determine history from
      *
      * @return a version claimed
-     * @throws ConradException
+     * @throws ConradException wrapping all exceptions
      */
     VersionEntry claimVersion(String commitId, String message, List<String> historyIds) throws ConradException;
 
@@ -36,7 +36,7 @@ public interface ConradClient {
      * case of SVN or may push to Git when using a Git repo.
      *
      * @param versionEntry version to tag the repo with.
-     * @throws ConradException
+     * @throws ConradException wrapping all exceptions
      */
     void tagVersion(VersionEntry versionEntry) throws ConradException;
 
