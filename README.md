@@ -1,3 +1,5 @@
+[![Circle CI](https://circleci.com/gh/ethankhall/version-manager-clients.svg?style=svg)](https://circleci.com/gh/ethankhall/version-manager-clients)
+
 # Version Management Client
 
 One of the boring and badly solved questions in CI is how do you version your changes on CI. These clients, use a hosted service to give you an automatically provision versions for you.
