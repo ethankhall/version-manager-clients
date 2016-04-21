@@ -33,6 +33,7 @@ public class ClaimVersionTask extends DefaultTask {
         if(!commitId.isPresent() || !message.isPresent() || !historyIds.isPresent()) {
             throw new RuntimeException("CommitId, Message and History must not be null");
         }
+
         try {
             ConradClient conradClient = getConradClient();
             VersionEntry version = conradClient.claimVersion(getCommitId(), getMessage(), getHistoryIds());
@@ -82,10 +83,15 @@ public class ClaimVersionTask extends DefaultTask {
 
     @Input
     public String getMessage() throws IOException {
-        ConradClient conradClient = getConradClient();
-        if(!message.isPresent()) {
-            setMessage(conradClient.getScmManager().getCurrentCommitDetails().getMessage());
+        VersionManagerExtension versionExtension = getVersionExtension();
+        if (versionExtension.getVersionCustomizer() != null) {
+            VersionEntry versionEntry = versionExtension.getVersionRequester().getVersionEntry();
+            String nextVersion = versionExtension.getVersionCustomizer().configure(versionEntry);
+            setMessage(String.format("[set version %s]", nextVersion));
+        } else if (!message.isPresent()) {
+            setMessage(getConradClient().getScmManager().getCurrentCommitDetails().getMessage());
         }
+
         return message.orElseGet(null);
     }
 

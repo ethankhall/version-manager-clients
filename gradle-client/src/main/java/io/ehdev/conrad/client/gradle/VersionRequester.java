@@ -1,6 +1,7 @@
 package io.ehdev.conrad.client.gradle;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.ehdev.conrad.client.java.RepoDetails;
 import io.ehdev.conrad.client.java.common.ConradClient;
 import io.ehdev.conrad.client.java.common.ConradClientBuilder;
 import io.ehdev.conrad.client.java.exception.ConradException;
@@ -21,7 +22,7 @@ class VersionRequester {
     private static final Logger logger = Logging.getLogger(VersionRequester.class);
     private final static ObjectMapper om = new ObjectMapper();
 
-    private final VersionManagerExtension extension;
+    private final RepoDetails extension;
     private final File rootProjectDir;
     private final File backupFile;
     private VersionEntry version;
@@ -31,6 +32,7 @@ class VersionRequester {
         this.extension = extension;
         this.rootProjectDir = rootProject.getProjectDir();
         this.backupFile = new File(rootProject.getProjectDir(), ".gradle/version-manager.txt");
+        extension.setVersionRequester(this);
     }
 
     private void evaluate() {
@@ -70,6 +72,13 @@ class VersionRequester {
         } catch (UncheckedIOException | IOException ignore) {
             return null;
         }
+    }
+
+    public VersionEntry getVersionEntry() {
+        if(null == version) {
+            evaluate();
+        }
+        return version;
     }
 
     @Override
