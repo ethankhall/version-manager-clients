@@ -4,7 +4,7 @@ public class RepoDetails {
     public String projectName;
     public String repoName;
     public String authToken;
-    public String baseUrl = "http://159.203.226.149:8080";
+    public String baseUrl = "http://api.crom.tech";
 
     public RepoDetails(String projectName, String repoName, String authToken) {
         this.projectName = projectName;

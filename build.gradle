@@ -21,4 +21,5 @@ allprojects {
 versionManager {
     projectName = 'ethankhall'
     repoName = 'version-manager-clients'
+    baseUrl = 'http://api.crom.tech'
 }
