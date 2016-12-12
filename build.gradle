@@ -14,7 +14,7 @@ buildscript {
 apply plugin: 'version-manager'
 
 allprojects {
-    group = 'io.ehdev.conrad.client'
+    group = 'tech.crom.client'
     buildDir = new File(rootDir, "build/${it.path.substring(1).replace(":", "/")}")
 }
 
