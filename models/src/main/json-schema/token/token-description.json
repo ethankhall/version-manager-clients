@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "javaName": "TokenDescription",
+  "description": "A token description.",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "ID of the token.",
+      "id": "id"
+    },
+    "createdAt": {
+      "type": "string",
+      "description": "When the token was created.",
+      "id": "createdAt"
+    },
+    "expiresAt": {
+      "type": "string",
+      "description": "When the token expires.",
+      "id": "expiresAt"
+    }
+  },
+  "required": [
+    "id",
+    "createdAt",
+    "expiresAt"
+  ]
+}

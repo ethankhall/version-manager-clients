@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "javaName": "TokenCreateRequest",
+  "description": "Created token for a repo.",
+  "extends" : {
+    "$ref" : "token-description.json"
+  },
+  "properties": {
+    "authToken": {
+      "type": "string",
+      "description": "The token to be used when talking to services.",
+      "id": "authToken"
+    }
+  },
+  "id": "/",
+  "required": [
+    "id",
+    "createdAt",
+    "expiresAt",
+    "authToken"
+  ]
+}

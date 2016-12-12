@@ -1,0 +1,40 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "javaName": "ProjectDescription",
+  "properties": {
+    "name": {
+      "title": "Name schema.",
+      "description": "Name of the project.",
+      "id": "name"
+    },
+    "repos": {
+      "type": "array",
+      "items": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of the repo.",
+            "id": "name"
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "id": "repos"
+    },
+    "permissions": {
+      "type": "array",
+      "items": {
+        "$ref": "../permission/permission-description.json"
+      },
+      "id": "permissions"
+    }
+  },
+  "id": "/",
+  "required": [
+    "name",
+    "repos"
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "javaName": "VersionSearchRequest",
+  "description": "A list of ID's used to find a version.",
+  "properties": {
+    "commits": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "id": "commits"
+    }
+  },
+  "id": "/",
+  "required": [
+    "commits"
+  ]
+}

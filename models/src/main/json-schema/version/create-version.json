@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "description": "Object used when creating a version",
+  "javaName": "CreateVersionRequest",
+  "properties": {
+    "commits": {
+      "type": "array",
+      "description": "Used to find the latest version.",
+      "items": {
+        "type": "string",
+        "description": "History of the repo."
+      },
+      "id": "commits"
+    },
+    "message": {
+      "type": "string",
+      "description": "Message used for the commit. Used to calculate the next version number.",
+      "id": "message"
+    },
+    "commitId": {
+      "type": "string",
+      "description": "Id of the current commit",
+      "id": "commitId"
+    }
+  },
+  "id": "/",
+  "required": [
+    "commits",
+    "message",
+    "commitId"
+  ]
+}

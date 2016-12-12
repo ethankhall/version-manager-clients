@@ -1,1 +1,1 @@
-include ':java-client', ':gradle-client'
+include ':java-client', ':gradle-client', ':models'

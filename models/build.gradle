@@ -1,0 +1,53 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'org.jsonschema2pojo:jsonschema2pojo-gradle-plugin:+'
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'jsonschema2pojo'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'commons-lang:commons-lang:2.6'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.8.5'
+    compile 'com.fasterxml.jackson.core:jackson-annotations:2.8.5'
+}
+
+jsonSchema2Pojo {
+    generateBuilders = true
+    usePrimitives = false
+    source = files("src/main/json-schema")
+    targetDirectory = file("${project.buildDir}/generated-sources/js2p")
+    targetPackage = 'crom.tech.api.models'
+    propertyWordDelimiters = [] as char[]
+    useLongIntegers = false
+    useBigIntegers = false
+    useDoubleNumbers = true
+    useBigDecimals = false
+    includeHashcodeAndEquals = true
+    includeToString = true
+    annotationStyle = 'jackson2'
+    customAnnotator = 'org.jsonschema2pojo.NoopAnnotator'
+    includeJsr303Annotations = false
+    sourceType = 'jsonschema'
+    removeOldOutput = true
+    outputEncoding = 'UTF-8'
+    useJodaDates = false
+    useCommonsLang3 = false
+    initializeCollections = true
+    classNamePrefix = ""
+    classNameSuffix = ""
+    fileExtensions = [] as String[]
+    includeConstructors = false
+    serializable = true
+    includeAccessors = true
+    includeDynamicAccessors = false
+}

@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "description": "A list of all versions.",
+  "javaName": "VersionList",
+  "properties": {
+    "commits": {
+      "type": "array",
+      "description": "List of all versions.",
+      "items": {
+        "$ref" : "version-description.json"
+      },
+      "id": "commits"
+    },
+    "latest": {
+      "$ref" : "version-description.json"
+    }
+  },
+  "id": "/",
+  "required": [
+    "commits",
+    "latest"
+  ]
+}

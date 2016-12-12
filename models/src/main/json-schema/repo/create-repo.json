@@ -1,0 +1,52 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "description": "Description of the repo.",
+  "javaName": "CreateRepoRequest",
+  "properties": {
+    "scmUrl": {
+      "type": "string",
+      "description": "SCM url for the repo.",
+      "id": "scmUrl"
+    },
+    "bumper": {
+      "type": "string",
+      "description": "Bumper to use for this repo.",
+      "id": "bumper"
+    },
+    "history": {
+      "type": "array",
+      "description": "History information.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "commitId": {
+            "type": "string",
+            "description": "ID used for this entry in history.",
+            "id": "commitId"
+          },
+          "version": {
+            "type": "string",
+            "description": "Version for the ID.",
+            "id": "version"
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "When the version was created at.",
+            "id": "createdAt"
+          }
+        },
+        "required": [
+          "commitId",
+          "version"
+        ]
+      },
+      "id": "history"
+    }
+  },
+  "id": "/",
+  "required": [
+    "scmUrl",
+    "bumper"
+  ]
+}
