@@ -24,5 +24,6 @@
     "id",
     "createdAt",
     "expiresAt"
-  ]
+  ],
+  "additionalProperties": false
 }

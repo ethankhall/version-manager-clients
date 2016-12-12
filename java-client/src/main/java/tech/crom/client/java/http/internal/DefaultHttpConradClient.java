@@ -34,10 +34,7 @@ public class DefaultHttpConradClient implements HttpConradClient {
             throw new RuntimeException("The auth token is not set. Please set the API via VERSION_MANAGER_AUTH_TOKEN or versionManager.authToken");
         }
 
-        CreateVersionRequest createVersionRequest = new CreateVersionRequest()
-                .withCommits(history)
-                .withMessage(message)
-                .withCommitId(commitId);
+        CreateVersionRequest createVersionRequest = new CreateVersionRequest(history, message, commitId);
         Response<VersionDescription> execute = conradRetrofitService.claimVersion(repoDetails.projectName, repoDetails.repoName, createVersionRequest).execute();
 
         if(execute.code() == 401) {
@@ -58,7 +55,7 @@ public class DefaultHttpConradClient implements HttpConradClient {
 
     @Override
     public VersionEntry getCurrentVersion(List<String> history) throws IOException {
-        VersionSearchRequest commits = new VersionSearchRequest().withCommits(history);
+        VersionSearchRequest commits = new VersionSearchRequest(history);
         Response<VersionDescription> execute = conradRetrofitService.findVersion(repoDetails.projectName, repoDetails.repoName, commits).execute();
 
         if (execute.isSuccessful()) {

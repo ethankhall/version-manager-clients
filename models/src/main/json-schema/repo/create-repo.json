@@ -48,5 +48,6 @@
   "required": [
     "scmUrl",
     "bumper"
-  ]
+  ],
+  "additionalProperties": false
 }

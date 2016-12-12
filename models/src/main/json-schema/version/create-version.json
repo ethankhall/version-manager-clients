@@ -29,5 +29,6 @@
     "commits",
     "message",
     "commitId"
-  ]
+  ],
+  "additionalProperties": false
 }

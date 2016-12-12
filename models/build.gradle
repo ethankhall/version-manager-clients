@@ -22,7 +22,7 @@ dependencies {
 }
 
 jsonSchema2Pojo {
-    generateBuilders = true
+    generateBuilders = false
     usePrimitives = false
     source = files("src/main/json-schema")
     targetDirectory = file("${project.buildDir}/generated-sources/js2p")
@@ -46,8 +46,12 @@ jsonSchema2Pojo {
     classNamePrefix = ""
     classNameSuffix = ""
     fileExtensions = [] as String[]
-    includeConstructors = false
+    includeConstructors = true
     serializable = true
     includeAccessors = true
     includeDynamicAccessors = false
+}
+
+javadoc {
+    failOnError = false
 }

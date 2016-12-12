@@ -16,5 +16,6 @@
   "id": "/",
   "required": [
     "tokens"
-  ]
+  ],
+  "additionalProperties": false
 }

@@ -15,5 +15,6 @@
   "id": "/",
   "required": [
     "commits"
-  ]
+  ],
+  "additionalProperties": false
 }

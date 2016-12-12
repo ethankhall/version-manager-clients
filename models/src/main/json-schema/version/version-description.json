@@ -20,7 +20,7 @@
     },
     "versionParts": {
       "type": "array",
-      "description": "An array of the version, split on <dot>.",
+      "description": "An array of the version, split on {@code <dot>}.",
       "items": {
         "type": "string"
       },
@@ -36,5 +36,6 @@
     "version",
     "createdAt",
     "versionParts"
-  ]
+  ],
+  "additionalProperties": false
 }

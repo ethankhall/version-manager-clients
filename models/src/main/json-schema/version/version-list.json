@@ -13,6 +13,7 @@
       "id": "commits"
     },
     "latest": {
+      "id": "latest",
       "$ref" : "version-description.json"
     }
   },
@@ -20,5 +21,6 @@
   "required": [
     "commits",
     "latest"
-  ]
+  ],
+  "additionalProperties": false
 }
