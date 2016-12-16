@@ -28,10 +28,10 @@ dependencies {
 }
 
 shadowJar {
-    relocate 'com.fasterxml.jackson', 'jarjar.com.fasterxml.jackson'
-    relocate 'org.apache', 'jarjar.org.apache'
-    relocate 'retrofit2', 'jarjar.retrofit2'
-    relocate 'okhttp3', 'jarjar.okhttp3'
+    relocate 'com.fasterxml.jackson', 'tech.crom.shade.com.fasterxml.jackson'
+    relocate 'org.apache', 'tech.crom.shade.org.apache'
+    relocate 'retrofit2', 'tech.crom.shade.retrofit2'
+    relocate 'okhttp3', 'tech.crom.shade.okhttp3'
 }
 
 publishing {

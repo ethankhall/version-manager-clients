@@ -1,8 +1,8 @@
 package tech.crom.client.gradle;
 
-import jarjar.org.apache.commons.lang3.StringUtils;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
+import tech.crom.shade.org.apache.commons.lang.StringUtils;
 
 public class VersionManagerPlugin implements Plugin<Project> {
 

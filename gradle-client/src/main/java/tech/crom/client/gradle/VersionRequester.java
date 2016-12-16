@@ -1,6 +1,6 @@
 package tech.crom.client.gradle;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tech.crom.shade.com.fasterxml.jackson.databind.ObjectMapper;
 import tech.crom.client.java.RepoDetails;
 import tech.crom.client.java.common.ConradClient;
 import tech.crom.client.java.common.ConradClientBuilder;

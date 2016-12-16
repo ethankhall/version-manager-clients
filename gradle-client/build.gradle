@@ -22,7 +22,7 @@ dependencies {
 publishing.publications.all {
     pom.withXml {
         def dep = asNode().dependencies.dependency.find {
-            it.groupId.text() == 'io.ehdev.conrad.client' && it.artifactId.text() == 'java-client'
+            it.groupId.text() == 'tech.crom.client' && it.artifactId.text() == 'java-client'
         }
 
         dep.appendNode('classifier', 'all')
