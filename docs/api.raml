@@ -1,0 +1,311 @@
+#%RAML 1.0
+title: Crom
+version: v1
+schemas:
+  PermissionCreateResponse:  !include ../models/src/main/json-schema/PermissionCreateResponse.json
+  GetPermissionGrantWrapper: !include ../models/src/main/json-schema/GetPermissionGrantWrapper.json
+  PermissionGrant: !include ../models/src/main/json-schema/PermissionGrant.json
+  GetProjectResponse: !include ../models/src/main/json-schema/GetProjectResponse.json
+  CreateProjectResponse: !include ../models/src/main/json-schema/CreateProjectRequest.json
+  GetRepoResponse: !include ../models/src/main/json-schema/GetRepoResponse.json
+  ErrorResponse: !include schemas/error-model.json
+  CreateRepoRequest: !include ../models/src/main/json-schema/CreateRepoRequest.json
+  CreateRepoResponse: !include ../models/src/main/json-schema/CreateRepoResponse.json
+  CommitIdCollection: !include ../models/src/main/json-schema/CommitIdCollection.json
+  VersionSearchResponse: !include ../models/src/main/json-schema/VersionSearchResponse.json
+  GetAllVersionsResponse: !include ../models/src/main/json-schema/GetAllVersionsResponse.json
+  GetVersionResponse: !include ../models/src/main/json-schema/GetVersionResponse.json
+  CreateVersionRequest: !include ../models/src/main/json-schema/CreateVersionRequest.json
+  CreateVersionResponse: !include ../models/src/main/json-schema/CreateVersionResponse.json
+  GetTokensResponse: !include ../models/src/main/json-schema/GetTokensResponse.json
+  CreateTokenResponse: !include ../models/src/main/json-schema/CreateTokenResponse.json
+  GetFullProfileResponse: !include ../models/src/main/json-schema/GetFullProfileResponse.json
+  PostUserUpdate: !include ../models/src/main/json-schema/PostUserUpdate.json
+traits:
+  secured:
+    headers:
+      X-AUTH-TOKEN:
+        type: string
+        displayName: X-AUTH-TOKEN
+        description: Header used to provide the token to auth with the service.
+
+baseUri: http://api.crom.tech
+/api/v1/project/{projectName}:
+  head:
+  get:
+    responses:
+      200:
+        description: Gets the details of a project.
+        body:
+          application/json:
+            schema: GetProjectResponse
+            example: !include examples/project/get-project.json
+      404:
+        description: Returned when the project does not exist.
+        body:
+          application/json:
+            schema: ErrorResponse
+            example: !include examples/project/project-does-not-exist.json
+  post:
+    is: [secured]
+    body:
+      application/json: {}
+    responses:
+      201:
+        description: When the project is created
+        body:
+          application/json:
+            schema: CreateProjectResponse
+            example: !include examples/project/create-project-response.json
+      409:
+        description: If the project already exists.
+        body:
+          application/json:
+            schema: ErrorResponse
+            example: !include examples/project/project-already-exists.json
+  uriParameters:
+    projectName:
+      type: string
+      description: Name of the project.
+  /permissions:
+    is: [secured]
+    post:
+      body:
+        application/json:
+          schema: PermissionGrant
+          example: !include examples/project/permissions/new-permission-example.json
+      responses:
+        201:
+          body:
+            application/json:
+              schema: PermissionCreateResponse
+        403:
+          body:
+            application/json:
+              schema: PermissionCreateResponse
+
+    get:
+      responses:
+        200:
+          description: Admin permissions required.
+          body:
+            application/json:
+              schema: GetPermissionGrantWrapper
+              example: !include examples/project/permissions/permission-list.json
+        401:
+          description: Admin permissions required, you don't have permission.
+          body:
+            application/json:
+              schema: ErrorResponse
+    /{username}:
+      delete:
+        description: Remove a user's permissions from this project.
+        is: [secured]
+        responses:
+          200:
+      uriParameters:
+        username:
+          type: string
+          description: Name of the user to remove permissions from
+
+
+/api/v1/project/{projectName}/repo/{repoName}:
+    delete:
+      is:  [secured]
+      responses:
+        200:
+    post:
+      is:  [secured]
+      description: Create a new repo user a project.
+      body:
+        application/json:
+          schema: CreateRepoRequest
+          examples:
+            withHistory: !include examples/repo/new-repo-with-history.json
+            withOutHistory: !include examples/repo/new-repo-without-history.json
+      responses:
+        201:
+          body:
+            application/json:
+              schema: CreateRepoResponse
+              example: !include examples/repo/new-repo-response.json
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include examples/repo/get-repo.json
+              schema: GetRepoResponse
+    /search/version:
+      description: Find a version based on history. This is used to find your most recent commit that has been tracked by Crom.
+      post:
+        body:
+          application/json:
+            schema: CommitIdCollection
+            example: !include examples/repo/search-for-version-request.json
+        responses:
+          404:
+            description: When a version is not found based on the search parameters.
+          200:
+            description: When the version is found
+            body:
+              application/json:
+                schema: VersionSearchResponse
+                example: !include examples/repo/search-for-version-response.json
+    /version:
+      post:
+        is:  [secured]
+        body:
+          application/json:
+            schema: CreateVersionRequest
+            example: !include examples/repo/versions/create-version-example.json
+        responses:
+          200:
+            body:
+              application/json:
+                schema: CreateVersionResponse
+    /versions:
+      get:
+        description: Get all the versions for this repository.
+        responses:
+          200:
+            body:
+              application/json:
+                schema: GetAllVersionsResponse
+                example: !include examples/repo/versions/list-all-versions.json
+    /version/{versionNumber}:
+      uriParameters:
+        versionNumber:
+          type: string
+          description: The version number to look up
+      get:
+        description: Finds a specific version.
+        responses:
+          200:
+            body:
+              application/json:
+                schema: GetVersionResponse
+                example: !include examples/repo/versions/specific-version.json
+          404:
+    /version/{commitId}:
+      uriParameters:
+        commitId:
+          type: string
+          description: The commit to lookup.
+      get:
+        description: Finds a specific version.
+        responses:
+          200:
+            body:
+              application/json:
+                schema: GetVersionResponse
+                example: !include examples/repo/versions/specific-version.json
+          404:
+    /token:
+      get:
+        is: [secured]
+        responses:
+          200:
+            body:
+              application/json:
+                schema: GetTokensResponse
+      post:
+        description: >
+         Create a new token to operate on. This token is only valid for this repo,
+         and has an experation date defaulting to 60 days in the future. When the token
+         is created, the value to be used in the header is also included. This is the only
+         time the value will be provded.
+        is: [secured]
+        queryParameters:
+          validFor:
+            type: integer
+            description: How many days the token should be valid for.
+            default: 60
+        responses:
+          200:
+            body:
+              application/json:
+                schema: CreateTokenResponse
+      /{tokenId}:
+        delete:
+          is: [secured]
+          responses:
+            200:
+        uriParameters:
+          tokenId:
+            type: string
+            description: ID of the token to operate on
+    uriParameters:
+      repoName:
+        type: string
+        description: Name of the repo.
+      projectName:
+        type: string
+        description: Name of the project.
+/api/v1/user:
+  /profile:
+    get:
+      is: [secured]
+      responses:
+        200:
+          body:
+            application/json:
+              schema: GetFullProfileResponse
+    /update:
+      post:
+        is: [secured]
+        body:
+          application/json:
+            schema: PostUserUpdate
+  /tokens:
+    get:
+      is: [secured]
+      responses:
+        200:
+          body:
+            application/json:
+              schema: GetTokensResponse
+    post:
+      description: >
+       Create a new token to operate on. This token is only valid for this repo,
+       and has an experation date defaulting to 60 days in the future. When the token
+       is created, the value to be used in the header is also included. This is the only
+       time the value will be provded.
+      is: [secured]
+      queryParameters:
+        validFor:
+          type: integer
+          description: How many days the token should be valid for.
+          default: 60
+      responses:
+        200:
+          body:
+            application/json:
+              schema: CreateTokenResponse
+    /{tokenId}:
+      delete:
+        is: [secured]
+        responses:
+          200:
+      uriParameters:
+        tokenId:
+          type: string
+          description: ID of the token to operate on
+    /watch:
+      /project/{projectName}:
+        post:
+          is: [secured]
+        uriParameters:
+          projectName:
+            type: string
+            description: Name of the project to watch
+      /project/{projectName}repo/{repoName}:
+        post:
+          is: [secured]
+        uriParameters:
+          projectName:
+            type: string
+            description: Name of the project to watch
+          repoName:
+            type: string
+            description: Name of the repo to watch

@@ -1,0 +1,18 @@
+{
+  "name": "version-manager-clients",
+  "version": "1.0.0",
+  "description": "Clients to use Crom",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ethankhall/version-manager-clients.git"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/ethankhall/version-manager-clients/issues"
+  },
+  "homepage": "https://github.com/ethankhall/version-manager-clients#readme",
+  "dependencies": {
+    "raml2html": "^4.0.4"
+  }
+}

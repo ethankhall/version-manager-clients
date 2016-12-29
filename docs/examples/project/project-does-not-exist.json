@@ -1,0 +1,6 @@
+{
+  "status": 404,
+  "timestamp": 1483035961119,
+  "errorCode": "PR-001",
+  "message": "Project (ethankhall2) doesn't exist, but it is required."
+}

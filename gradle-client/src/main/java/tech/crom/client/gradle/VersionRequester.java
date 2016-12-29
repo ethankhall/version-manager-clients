@@ -1,21 +1,20 @@
 package tech.crom.client.gradle;
 
-import tech.crom.shade.com.fasterxml.jackson.databind.ObjectMapper;
-import tech.crom.client.java.RepoDetails;
-import tech.crom.client.java.common.ConradClient;
-import tech.crom.client.java.common.ConradClientBuilder;
-import tech.crom.client.java.exception.ConradException;
-import tech.crom.client.java.http.VersionEntry;
 import org.gradle.api.Project;
 import org.gradle.api.UncheckedIOException;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.logging.Logging;
 import org.gradle.util.GFileUtils;
+import tech.crom.client.java.RepoDetails;
+import tech.crom.client.java.common.ConradClient;
+import tech.crom.client.java.common.ConradClientBuilder;
+import tech.crom.client.java.exception.ConradException;
+import tech.crom.client.java.http.VersionEntry;
+import tech.crom.shade.com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
-import java.util.Arrays;
 
 class VersionRequester {
 
@@ -44,7 +43,7 @@ class VersionRequester {
             version = getBackup();
             if (null == version) {
                 logger.error("Unable to get version ({}), using default version.", e.getMessage());
-                version = new VersionEntry(Arrays.asList("0", "0", "1"), "SNAPSHOT", "unknown");
+                version = new VersionEntry("0.0.1-SNAPSHOT", "unknown");
             } else {
                 logger.warn("Unable to get version ({}), using last version.", e.getMessage());
             }

@@ -1,0 +1,20 @@
+{
+  "name": "ethankhall",
+  "repos": [
+    {
+      "name": "version-manager-ui"
+    },
+    {
+      "name": "version-manager"
+    },
+    {
+      "name": "version-manager-clients"
+    }
+  ],
+  "permissions": [
+    {
+      "username": "ethankhall",
+      "accessLevel": "ADMIN"
+    }
+  ]
+}

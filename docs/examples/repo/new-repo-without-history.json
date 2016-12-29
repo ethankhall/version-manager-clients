@@ -1,0 +1,5 @@
+{
+  "scmUrl": "git@github.com:ethankhall/version-manager-clients.git",
+  "bumper": "semver",
+  "history": []
+}

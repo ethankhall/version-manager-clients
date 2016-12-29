@@ -53,6 +53,33 @@ jsonSchema2Pojo {
     includeDynamicAccessors = false
 }
 
+task removeDups {
+    dependsOn generateJsonSchema2Pojo
+    doLast {
+        def replaceMap = [:]
+        fileTree(jsonSchema2Pojo.targetDirectory).visit { FileVisitDetails details ->
+            def className = details.file.getName() - '.java'
+            if(className.endsWith('_')) {
+                replaceMap[className] = className.replaceAll('_', '')
+                details.file.delete()
+            }
+        }
+
+        fileTree(jsonSchema2Pojo.targetDirectory).visit { FileVisitDetails details ->
+            if(details.file.isDirectory()) {
+                return
+            }
+            def workingCopy = details.file.text
+            replaceMap.sort { -it.key.size() } .each { k,v ->
+                workingCopy = workingCopy.replace(k, v)
+            }
+            details.file.text = workingCopy
+        }
+    }
+}
+
+compileJava.dependsOn removeDups
+
 javadoc {
     failOnError = false
 }

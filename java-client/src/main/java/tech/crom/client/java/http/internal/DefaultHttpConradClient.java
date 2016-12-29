@@ -1,17 +1,17 @@
 package tech.crom.client.java.http.internal;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import crom.tech.api.models.version.CreateVersionRequest;
-import crom.tech.api.models.version.VersionDescription;
-import crom.tech.api.models.version.VersionSearchRequest;
+import crom.tech.api.models.CommitIdCollection;
+import crom.tech.api.models.CreateVersionRequest;
+import crom.tech.api.models.CreateVersionResponse;
+import crom.tech.api.models.VersionSearchResponse;
+import org.apache.commons.lang3.StringUtils;
+import retrofit2.Response;
 import tech.crom.client.java.RepoDetails;
 import tech.crom.client.java.http.HttpConradClient;
 import tech.crom.client.java.http.VersionEntry;
-import org.apache.commons.lang3.StringUtils;
-import retrofit2.Response;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 
 public class DefaultHttpConradClient implements HttpConradClient {
@@ -21,7 +21,7 @@ public class DefaultHttpConradClient implements HttpConradClient {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    private static final VersionEntry FALLBACK_VERSION = new VersionEntry(Arrays.asList("0", "0", "0"), null, "<unknown>");
+    private static final VersionEntry FALLBACK_VERSION = new VersionEntry("0.0.0", "<unknown>");
 
     public DefaultHttpConradClient(RepoDetails repoDetails, ConradRetrofitService conradRetrofitService) {
         this.repoDetails = repoDetails;
@@ -35,7 +35,7 @@ public class DefaultHttpConradClient implements HttpConradClient {
         }
 
         CreateVersionRequest createVersionRequest = new CreateVersionRequest(history, message, commitId);
-        Response<VersionDescription> execute = conradRetrofitService.claimVersion(repoDetails.projectName, repoDetails.repoName, createVersionRequest).execute();
+        Response<CreateVersionResponse> execute = conradRetrofitService.claimVersion(repoDetails.projectName, repoDetails.repoName, createVersionRequest).execute();
 
         if(execute.code() == 401) {
             throw new RuntimeException("The token that you used was not accepted, check that it is valid.");
@@ -49,18 +49,18 @@ public class DefaultHttpConradClient implements HttpConradClient {
                 throw new RuntimeException("Unable to claim version: " + execute.errorBody().string());
             }
         }
-        VersionDescription response = execute.body();
-        return new VersionEntry(response.getVersionParts(), response.getPostfix(), response.getCommitId());
+        CreateVersionResponse response = execute.body();
+        return new VersionEntry(response.getVersion(), response.getCommitId());
     }
 
     @Override
     public VersionEntry getCurrentVersion(List<String> history) throws IOException {
-        VersionSearchRequest commits = new VersionSearchRequest(history);
-        Response<VersionDescription> execute = conradRetrofitService.findVersion(repoDetails.projectName, repoDetails.repoName, commits).execute();
+        CommitIdCollection commits = new CommitIdCollection(history);
+        Response<VersionSearchResponse> execute = conradRetrofitService.findVersion(repoDetails.projectName, repoDetails.repoName, commits).execute();
 
         if (execute.isSuccessful()) {
-            VersionDescription version = execute.body();
-            return new VersionEntry(version.getVersionParts(), version.getPostfix(), version.getCommitId());
+            VersionSearchResponse version = execute.body();
+            return new VersionEntry(version.getVersion(), version.getCommitId());
         } else {
             return FALLBACK_VERSION.toNextSnapshot();
         }

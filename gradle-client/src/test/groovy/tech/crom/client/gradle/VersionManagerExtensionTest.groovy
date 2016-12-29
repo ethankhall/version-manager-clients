@@ -14,6 +14,6 @@ class VersionManagerExtensionTest extends Specification {
     extension.customize { return "0.2.3.4" }
 
     then:
-    extension.getVersionCustomizer().configure(new VersionEntry([], null, null)) == '0.2.3.4'
+    extension.getVersionCustomizer().configure(new VersionEntry("0", null)) == '0.2.3.4'
   }
 }

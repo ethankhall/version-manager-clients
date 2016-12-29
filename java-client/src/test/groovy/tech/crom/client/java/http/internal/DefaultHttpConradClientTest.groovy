@@ -1,13 +1,13 @@
 package tech.crom.client.java.http.internal
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import crom.tech.api.models.version.CreateVersionRequest
-import tech.crom.client.java.http.HttpConradClientBuilder
+import crom.tech.api.models.CreateVersionRequest
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.Rule
 import spock.lang.Shared
 import spock.lang.Specification
+import tech.crom.client.java.http.HttpConradClientBuilder
 
 class DefaultHttpConradClientTest extends Specification {
 

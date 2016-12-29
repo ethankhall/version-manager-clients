@@ -1,0 +1,23 @@
+{
+  "scmUrl": "git@github.com:ethankhall/version-manager-clients.git",
+  "bumper": "semver",
+  "history": [
+{"commitId": "49def3d2771da0ae6fdde9fa5362d03c9ced6767", "version": "0.0.2", "createdAt": "2016-04-11T21:20:32-07:00" },
+{"commitId": "4119b77cc16e55ba58b5d699856f4f699279ec6b", "version": "0.0.3", "createdAt": "2016-04-11T22:01:06-07:00" },
+{"commitId": "293d3568be0d644d9b0d0d68ec25bf2a1a504f6a", "version": "0.0.4", "createdAt": "2016-04-11T22:07:26-07:00" },
+{"commitId": "e943819265be8f22b84f0b153ff2dda73dd6a574", "version": "0.0.7", "createdAt": "2016-04-11T22:20:16-07:00" },
+{"commitId": "ec68f2b968093d00366de38c00df9ee0ed179356", "version": "0.0.8", "createdAt": "2016-04-11T22:24:11-07:00" },
+{"commitId": "2ed4c2a4509f240bf75ccc85d8893123af0e27a6", "version": "0.0.9", "createdAt": "2016-04-12T22:56:04-07:00" },
+{"commitId": "da13c7787f128c189792753cd66f14effcf44bc5", "version": "0.0.10", "createdAt": "2016-04-14T20:36:06-07:00" },
+{"commitId": "05d138d3c6f28df0d44d02ec41171c508a43159f", "version": "0.0.11", "createdAt": "2016-04-14T20:45:45-07:00" },
+{"commitId": "8a8aa2ad22f50b349bcbbe18d7516e30687ffbf8", "version": "0.0.12", "createdAt": "2016-04-14T20:53:33-07:00" },
+{"commitId": "c06c8a4c0552a999f61a59d03eb862116c3dedf4", "version": "0.0.15", "createdAt": "2016-04-15T11:03:13-07:00" },
+{"commitId": "59e90454de3db26f2d69bcd9202f02d165190b69", "version": "0.0.16", "createdAt": "2016-04-20T18:51:20-07:00" },
+{"commitId": "a17fb3a1979400f84b8951b3a7b6f0477307760a", "version": "0.0.17", "createdAt": "2016-04-20T18:56:46-07:00" },
+{"commitId": "64cbf6054bf3d39b1de0ebddb7e48941ebf0e9de", "version": "0.0.18", "createdAt": "2016-04-20T18:59:21-07:00" },
+{"commitId": "9d30536a73dc3a65a5cb23a7ada0758fc4c20363", "version": "0.0.19", "createdAt": "2016-04-29T22:57:41-07:00" },
+{"commitId": "5553818b3e5acb50207cbc5a262e2a520b1b70da", "version": "0.1.0", "createdAt": "2016-12-11T21:26:34-08:00" },
+{"commitId": "0ee331c02536c00a68920baeccfdcae666b2cb30", "version": "0.1.1", "createdAt": "2016-12-11T21:48:53-08:00" },
+{"commitId": "5e41cd868beb147bb1765d718c4d382032a68884", "version": "0.1.2", "createdAt": "2016-12-11T22:01:41-08:00" },
+{"commitId": "39f55623ed1735b33e48b4646bfad2608aadccdd", "version": "0.1.3", "createdAt": "2016-12-16T09:39:29-08:00" }  ]
+}
