@@ -7,7 +7,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'io.ehdev.conrad.client:gradle-client:+'
+        classpath 'tech.crom.client:gradle-client:+'
     }
 }
 
