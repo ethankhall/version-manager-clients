@@ -1,11 +1,11 @@
 plugins {
     id 'java'
     id 'groovy'
-    id 'com.github.johnrengelman.shadow' version '1.2.3'
 }
 apply from: "$rootDir/gradle/publishing.gradle"
 
 sourceCompatibility = JavaVersion.VERSION_1_7
+apply plugin: 'com.github.johnrengelman.shadow'
 
 repositories {
     mavenCentral()
@@ -42,3 +42,5 @@ publishing {
         }
     }
 }
+
+bintray.publications << 'shadow'

@@ -1,5 +1,23 @@
 apply plugin: 'maven-publish'
 apply plugin: 'java'
+apply plugin: 'com.jfrog.bintray'
+
+def pomConfig = {
+    licenses {
+        license {
+            name "The Apache Software License, Version 2.0"
+            url "http://www.apache.org/licenses/LICENSE-2.0.txt"
+            distribution "repo"
+        }
+    }
+    developers {
+        developer {
+            id "ethankhall"
+            name "Ethan Hall"
+            email "ethan@ehdev.io"
+        }
+    }
+}
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
     classifier = 'javadoc'
@@ -9,6 +27,24 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
 task sourceJar(type: Jar) {
     classifier = 'sources'
     from sourceSets.main.allSource
+}
+
+bintray {
+    user = System.getenv('BINTRAY_USER')
+    key = System.getenv('BINTRAY_KEY')
+    publications = ['mainJava']
+    pkg {
+        repo = 'crom'
+        name = project.name
+        userOrg = 'ethankhall'
+        licenses = ['Apache-2.0']
+        vcsUrl = 'https://github.com/ethankhall/version-manager-clients.git'
+        version {
+            name = project.version
+            released = new Date()
+            vcsTag = "v${ project.version }"
+        }
+    }
 }
 
 publishing {
@@ -23,15 +59,13 @@ publishing {
             artifact(sourceJar) {
                 classifier = 'sources'
             }
-        }
-    }
 
-    repositories {
-        maven {
-            url "s3://ehdev-maven-repo/maven2"
-            credentials(AwsCredentials) {
-                accessKey project.hasProperty("s3.accessKey") ? project.property("s3.accessKey") : ""
-                secretKey project.hasProperty("s3.secretKey") ? project.property("s3.secretKey") : ""
+            pom.withXml {
+                def root = asNode()
+                root.appendNode('description', project.description)
+                root.appendNode('name', project.name)
+                root.appendNode('url', "https://github.com/ethankhall/version-manager-clients")
+                root.children().last() + pomConfig
             }
         }
     }
