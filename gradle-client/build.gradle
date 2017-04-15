@@ -29,6 +29,8 @@ gradlePlugin {
     }
 }
 
+bintray.publications = ((bintray.publications as List<String>) + ['pluginMaven', 'cromPluginPluginMarkerMaven']) as String[]
+
 publishing.publications.mainJava {
     pom.withXml {
         def dep = asNode().dependencies.dependency.find {
