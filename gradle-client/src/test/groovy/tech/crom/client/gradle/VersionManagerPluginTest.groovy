@@ -13,7 +13,7 @@ class VersionManagerPluginTest extends PluginProjectSpec {
 
     @Override
     String getPluginName() {
-        return 'crom.tech.version-manager'
+        return 'tech.crom.version-manager'
     }
 
     def 'extension added'() {
