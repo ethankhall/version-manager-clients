@@ -1,6 +1,6 @@
 package tech.crom.client.java.common.internal;
 
-import tech.crom.client.java.common.ConradClient;
+import tech.crom.client.java.common.CromClient;
 import tech.crom.client.java.exception.ConradException;
 import tech.crom.client.java.http.HttpConradClient;
 import tech.crom.client.java.http.VersionEntry;
@@ -12,12 +12,12 @@ import org.apache.commons.lang3.StringUtils;
 import java.io.IOException;
 import java.util.List;
 
-public class DefaultGitConradClient implements ConradClient {
+public class DefaultGitCromClient implements CromClient {
 
     private final GitManager gitManager;
     private final HttpConradClient httpConradClient;
 
-    public DefaultGitConradClient(HttpConradClient httpConradClient, GitManager gitManager) {
+    public DefaultGitCromClient(HttpConradClient httpConradClient, GitManager gitManager) {
         this.httpConradClient = httpConradClient;
         this.gitManager = gitManager;
     }

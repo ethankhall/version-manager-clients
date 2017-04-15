@@ -16,6 +16,7 @@ buildscript {
 plugins {
     id 'com.github.johnrengelman.shadow' version '1.2.4' apply false
     id "com.jfrog.bintray" version "1.7.3" apply false
+//    id 'tech.crom.client:gradle-client:+'
 }
 
 apply plugin: 'version-manager'

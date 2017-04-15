@@ -1,1 +1,7 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+//        maven { url 'https://dl.bintray.com/ethankhall/crom/' }
+    }
+}
 include ':java-client', ':gradle-client', ':models'

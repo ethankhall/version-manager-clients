@@ -6,7 +6,7 @@ import tech.crom.client.java.scm.ScmManager;
 
 import java.util.List;
 
-public interface ConradClient {
+public interface CromClient {
 
     /**
      * This implementation calls to {@link #claimVersion(String, String, List)} with the commit id,

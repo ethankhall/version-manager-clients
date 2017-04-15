@@ -1,7 +1,7 @@
 package tech.crom.client.java.common;
 
 import tech.crom.client.java.RepoDetails;
-import tech.crom.client.java.common.internal.DefaultGitConradClient;
+import tech.crom.client.java.common.internal.DefaultGitCromClient;
 import tech.crom.client.java.scm.git.GitManager;
 import tech.crom.client.java.scm.git.GitManagerBuilder;
 import tech.crom.client.java.http.HttpConradClient;
@@ -22,12 +22,12 @@ public class ConradClientBuilder {
         this(new RepoDetails(projectName, repoName, authToken));
     }
 
-    public ConradClient build(File projectDir) {
+    public CromClient build(File projectDir) {
         try {
             GitManager gitManager = new GitManagerBuilder(projectDir).build();
             HttpConradClient httpClient = new HttpConradClientBuilder(repoDetails).build();
 
-            return new DefaultGitConradClient(httpClient, gitManager);
+            return new DefaultGitCromClient(httpClient, gitManager);
         } catch (IOException ioe) {
             throw new RuntimeException("Only the git client is supported at this time.");
         }

@@ -9,7 +9,7 @@ import spock.lang.Shared
 import spock.lang.Specification
 import tech.crom.client.java.http.HttpConradClientBuilder
 
-class DefaultHttpConradClientTest extends Specification {
+class DefaultHttpCromClientTest extends Specification {
 
     @Shared
     def om = new ObjectMapper()
@@ -19,7 +19,7 @@ class DefaultHttpConradClientTest extends Specification {
 
     def 'can get version from web-server'() {
         given:
-        server.enqueue(new MockResponse().setBody(DefaultHttpConradClientTest.getResource('/version-search-response.json').text))
+        server.enqueue(new MockResponse().setBody(DefaultHttpCromClientTest.getResource('/version-search-response.json').text))
         def client = new HttpConradClientBuilder('1', '2', '3').withBaseUrl("http://localhost:${server.port}").build()
 
         expect:
@@ -28,7 +28,7 @@ class DefaultHttpConradClientTest extends Specification {
     }
 
     def 'can create a version from web-server'() {
-        server.enqueue(new MockResponse().setBody(DefaultHttpConradClientTest.getResource('/version-create-response.json').text))
+        server.enqueue(new MockResponse().setBody(DefaultHttpCromClientTest.getResource('/version-create-response.json').text))
         def client = new HttpConradClientBuilder('1', '2', '3').withBaseUrl("http://localhost:${server.port}").build()
 
         when:

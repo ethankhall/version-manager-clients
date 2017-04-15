@@ -1,6 +1,7 @@
 package tech.crom.client.gradle;
 
-import tech.crom.client.java.common.ConradClient;
+import org.gradle.api.tasks.Internal;
+import tech.crom.client.java.common.CromClient;
 import tech.crom.client.java.common.ConradClientBuilder;
 import tech.crom.client.java.exception.ConradException;
 import tech.crom.client.java.http.VersionEntry;
@@ -26,7 +27,8 @@ public class ClaimVersionTask extends DefaultTask {
     private Optional<String> commitId = Optional.empty();
     private boolean tagCommit = true;
 
-    private ConradClient conradClient;
+    @Internal
+    private CromClient cromClient;
 
     @TaskAction
     public void claimVersion() throws IOException {
@@ -35,10 +37,10 @@ public class ClaimVersionTask extends DefaultTask {
         }
 
         try {
-            ConradClient conradClient = getConradClient();
-            VersionEntry version = conradClient.claimVersion(getCommitId(), getMessage(), getHistoryIds());
+            CromClient cromClient = getCromClient();
+            VersionEntry version = cromClient.claimVersion(getCommitId(), getMessage(), getHistoryIds());
             if(isTagCommit()) {
-                conradClient.tagVersion(version);
+                cromClient.tagVersion(version);
             }
             String versionString = version.toString();
             logger.lifecycle("Version claimed was: {}", versionString);
@@ -55,12 +57,12 @@ public class ClaimVersionTask extends DefaultTask {
         }
     }
 
-    private ConradClient getConradClient() {
-        if(conradClient == null) {
+    private CromClient getCromClient() {
+        if(cromClient == null) {
             VersionManagerExtension versionExtension = getVersionExtension();
-            conradClient = new ConradClientBuilder(versionExtension).build(getProject().getRootDir());
+            cromClient = new ConradClientBuilder(versionExtension).build(getProject().getRootDir());
         }
-        return conradClient;
+        return cromClient;
     }
 
     @Input
@@ -70,9 +72,9 @@ public class ClaimVersionTask extends DefaultTask {
 
     @Input
     public List<String> getHistoryIds() throws IOException {
-        ConradClient conradClient = getConradClient();
+        CromClient cromClient = getCromClient();
         if(!historyIds.isPresent()) {
-            setHistoryIds(conradClient.getScmManager().getPreviousCommitIds(50));
+            setHistoryIds(cromClient.getScmManager().getPreviousCommitIds(50));
         }
         return historyIds.orElseGet(null);
     }
@@ -89,7 +91,7 @@ public class ClaimVersionTask extends DefaultTask {
             String nextVersion = versionExtension.getVersionCustomizer().configure(versionEntry);
             setMessage(String.format("[set version %s]", nextVersion));
         } else if (!message.isPresent()) {
-            setMessage(getConradClient().getScmManager().getCurrentCommitDetails().getMessage());
+            setMessage(getCromClient().getScmManager().getCurrentCommitDetails().getMessage());
         }
 
         return message.orElseGet(null);
@@ -101,9 +103,9 @@ public class ClaimVersionTask extends DefaultTask {
 
     @Input
     public String getCommitId() throws IOException {
-        ConradClient conradClient = getConradClient();
+        CromClient cromClient = getCromClient();
         if(!commitId.isPresent()) {
-            setCommitId(conradClient.getScmManager().getCurrentCommitDetails().getId());
+            setCommitId(cromClient.getScmManager().getCurrentCommitDetails().getId());
         }
         return commitId.orElseGet(null);
     }

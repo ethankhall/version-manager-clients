@@ -6,7 +6,7 @@ import org.gradle.api.logging.Logger;
 import org.gradle.api.logging.Logging;
 import org.gradle.util.GFileUtils;
 import tech.crom.client.java.RepoDetails;
-import tech.crom.client.java.common.ConradClient;
+import tech.crom.client.java.common.CromClient;
 import tech.crom.client.java.common.ConradClientBuilder;
 import tech.crom.client.java.exception.ConradException;
 import tech.crom.client.java.http.VersionEntry;
@@ -36,7 +36,7 @@ class VersionRequester {
 
     private void evaluate() {
         try {
-            ConradClient client = new ConradClientBuilder(extension).build(rootProjectDir);
+            CromClient client = new ConradClientBuilder(extension).build(rootProjectDir);
             version = client.getCurrentVersion();
             persistBackup();
         } catch (ConradException e) {
