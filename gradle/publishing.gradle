@@ -35,7 +35,7 @@ bintray {
     publications = ['mainJava']
     pkg {
         repo = 'crom'
-        name = project.name
+        name = 'crom-' + project.name
         userOrg = 'ethankhall'
         licenses = ['Apache-2.0']
         vcsUrl = 'https://github.com/ethankhall/version-manager-clients.git'
