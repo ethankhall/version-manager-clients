@@ -23,7 +23,7 @@ dependencies {
 gradlePlugin {
     plugins {
         cromPlugin {
-            id = "crom.tech.version-manager"
+            id = "tech.crom.version-manager"
             implementationClass = "tech.crom.client.gradle.VersionManagerPlugin"
         }
     }
@@ -31,13 +31,15 @@ gradlePlugin {
 
 bintray.publications = ((bintray.publications as List<String>) + ['pluginMaven', 'cromPluginPluginMarkerMaven']) as String[]
 
-publishing.publications.mainJava {
+publishing.publications.all {
     pom.withXml {
         def dep = asNode().dependencies.dependency.find {
             it.groupId.text() == 'tech.crom.client' && it.artifactId.text() == 'java-client'
         }
 
-        dep.appendNode('classifier', 'all')
+        if (dep) {
+            dep.appendNode('classifier', 'all')
+        }
     }
 }
 
