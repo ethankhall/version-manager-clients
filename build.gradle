@@ -1,25 +1,8 @@
-buildscript {
-    repositories {
-        mavenCentral()
-        mavenLocal()
-        maven {
-            url 'http://repo.ehdev.io/maven2'
-        }
-    }
-    dependencies {
-        classpath 'tech.crom.client:gradle-client:+'
-        classpath('org.apache.ant:ant:1.9.7') {
-            force = true
-        }
-    }
-}
 plugins {
     id 'com.github.johnrengelman.shadow' version '1.2.4' apply false
     id "com.jfrog.bintray" version "1.7.3" apply false
-//    id 'tech.crom.client:gradle-client:+'
+    id 'crom.tech.version-manager' version 'LATEST'
 }
-
-apply plugin: 'version-manager'
 
 allprojects {
     group = 'tech.crom.client'

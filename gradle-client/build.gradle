@@ -29,7 +29,7 @@ gradlePlugin {
     }
 }
 
-publishing.publications.all {
+publishing.publications.mainJava {
     pom.withXml {
         def dep = asNode().dependencies.dependency.find {
             it.groupId.text() == 'tech.crom.client' && it.artifactId.text() == 'java-client'
@@ -38,3 +38,6 @@ publishing.publications.all {
         dep.appendNode('classifier', 'all')
     }
 }
+
+bintrayUpload.dependsOn('publishCromPluginPluginMarkerMavenPublicationToMavenLocal')
+bintrayUpload.dependsOn('publishPluginMavenPublicationToMavenLocal')

@@ -1,7 +1,15 @@
 pluginManagement {
     repositories {
         gradlePluginPortal()
-//        maven { url 'https://dl.bintray.com/ethankhall/crom/' }
+        maven { url 'https://dl.bintray.com/ethankhall/crom/' }
+    }
+    resolutionStrategy {
+        eachPlugin { details ->
+            def id = details.requested.id.id
+            if (id == 'crom.tech.version-manager' && details.requested.version == 'LATEST') {
+                details.useModule([group: 'tech.crom.client', name: 'gradle-client', version: '0.1.8'])
+            }
+        }
     }
 }
 include ':java-client', ':gradle-client', ':models'
