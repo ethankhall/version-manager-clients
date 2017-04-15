@@ -43,4 +43,4 @@ publishing {
     }
 }
 
-bintray.publications << 'shadow'
+bintray.publications = ((bintray.publications as List<String>) << 'shadow') as String[]
