@@ -1,7 +1,7 @@
 plugins {
     id 'com.github.johnrengelman.shadow' version '1.2.4' apply false
     id "com.jfrog.bintray" version "1.7.3" apply false
-    id 'crom.tech.version-manager' version 'LATEST'
+    id 'tech.crom.version-manager' version 'LATEST'
 }
 
 allprojects {

@@ -1,3 +1,5 @@
+import groovy.json.JsonSlurper
+
 pluginManagement {
     repositories {
         gradlePluginPortal()
@@ -6,8 +8,10 @@ pluginManagement {
     resolutionStrategy {
         eachPlugin { details ->
             def id = details.requested.id.id
-            if (id == 'crom.tech.version-manager' && details.requested.version == 'LATEST') {
-                details.useModule([group: 'tech.crom.client', name: 'gradle-client', version: '0.1.8'])
+            if (id == 'tech.crom.version-manager' && details.requested.version == 'LATEST') {
+                def blob = new JsonSlurper().parse(new URL("http://api.crom.tech/api/v1/project/ethankhall/repo/version-manager-clients/version/latest"))
+                println "Using the latest version of version-manger, which is ${blob.version}"
+                details.useVersion(blob.version)
             }
         }
     }

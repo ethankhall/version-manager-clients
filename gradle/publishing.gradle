@@ -33,6 +33,7 @@ bintray {
     user = System.getenv('BINTRAY_USER')
     key = System.getenv('BINTRAY_KEY')
     publications = ['mainJava']
+    publish = true
     pkg {
         repo = 'crom'
         name = 'crom-' + project.name
