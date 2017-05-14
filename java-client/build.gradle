@@ -16,6 +16,10 @@ dependencies {
     compile ('org.eclipse.jgit:org.eclipse.jgit:4.1.0.201509280440-r') {
         exclude group: 'org.apache.httpcomponents', module: 'httpclient'
     }
+    compile group: 'com.jcraft', name: 'jsch.agentproxy.sshagent', version: '0.0.9'
+    compile group: 'com.jcraft', name: 'jsch.agentproxy.usocket-jna', version: '0.0.9'
+    compile group: 'com.jcraft', name: 'jsch.agentproxy.jsch', version: '0.0.9'
+
 
     compile project(":models")
     compile 'com.squareup.retrofit2:retrofit:2.0.1'

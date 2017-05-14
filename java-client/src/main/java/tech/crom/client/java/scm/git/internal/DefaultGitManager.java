@@ -1,11 +1,5 @@
 package tech.crom.client.java.scm.git.internal;
 
-import tech.crom.client.java.exception.ScmException;
-import tech.crom.client.java.http.VersionEntry;
-import tech.crom.client.java.scm.CommitDetails;
-import tech.crom.client.java.scm.git.GitManager;
-
-import java.time.ZonedDateTime;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.Status;
 import org.eclipse.jgit.api.errors.GitAPIException;
@@ -15,9 +9,15 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryBuilder;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
+import org.eclipse.jgit.transport.SshSessionFactory;
+import tech.crom.client.java.exception.ScmException;
+import tech.crom.client.java.http.VersionEntry;
+import tech.crom.client.java.scm.CommitDetails;
+import tech.crom.client.java.scm.git.GitManager;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +25,10 @@ public class DefaultGitManager implements GitManager {
 
     private final Repository repo;
     private final Git git;
+
+    static {
+        SshSessionFactory.setInstance(new GitSessionFactory());
+    }
 
     public DefaultGitManager(File directory) throws IOException {
         repo = new RepositoryBuilder().findGitDir(directory).build();
@@ -66,10 +70,10 @@ public class DefaultGitManager implements GitManager {
     public void tag(VersionEntry version) throws ScmException {
         try {
             git.tag()
-                .setAnnotated(true)
-                .setName(String.format("v%s", version.getVersion()))
-                .setMessage("Tagged by Crom at " + ZonedDateTime.now().toString())
-                .call();
+                    .setAnnotated(true)
+                    .setName(String.format("v%s", version.getVersion()))
+                    .setMessage("Tagged by Crom at " + ZonedDateTime.now().toString())
+                    .call();
             git.push().setPushTags().call();
         } catch (GitAPIException e) {
             throw new ScmException(e);
