@@ -9,7 +9,8 @@ pluginManagement {
         eachPlugin { details ->
             def id = details.requested.id.id
             if (id == 'tech.crom.version-manager' && details.requested.version == 'LATEST') {
-                def blob = new JsonSlurper().parse(new URL("http://api.crom.tech/api/v1/project/ethankhall/repo/version-manager-clients/version/latest"))
+                //def blob = new JsonSlurper().parse(new URL("http://api.crom.tech/api/v1/project/ethankhall/repo/version-manager-clients/version/latest"))
+                def blob = [version: '0.1.12']
                 println "Using the latest version of version-manger, which is ${blob.version}"
                 details.useVersion(blob.version)
             }
