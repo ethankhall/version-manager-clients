@@ -13,8 +13,13 @@ import com.jcraft.jsch.agentproxy.usocket.JNAUSocketFactory;
 import org.eclipse.jgit.transport.JschConfigSessionFactory;
 import org.eclipse.jgit.transport.OpenSshConfig;
 import org.eclipse.jgit.util.FS;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class GitSessionFactory extends JschConfigSessionFactory {
+
+    private static final Logger logger = LoggerFactory.getLogger(GitSessionFactory.class);
+
     @Override
     protected void configure(OpenSshConfig.Host hc, Session session) {
 
@@ -29,7 +34,7 @@ public class GitSessionFactory extends JschConfigSessionFactory {
                 con = new SSHAgentConnector(usf);
             }
         } catch (AgentProxyException e) {
-            System.out.println(e);
+            logger.warn("Unable to access agent", e);
         }
 
         final JSch jsch = super.createDefaultJSch(fs);
