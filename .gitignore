@@ -1,4 +1,5 @@
-
+.DS_Store
+cli/vendor
 # Created by https://www.gitignore.io/api/gradle,intellij,java
 
 ### Gradle ###

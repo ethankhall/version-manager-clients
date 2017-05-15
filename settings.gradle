@@ -17,4 +17,4 @@ pluginManagement {
         }
     }
 }
-include ':java-client', ':gradle-client', ':models'
+include ':java-client', ':gradle-client', ':models', ':cli'

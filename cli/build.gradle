@@ -1,0 +1,20 @@
+plugins {
+    id 'org.echocat.golang' version '0.1.16'
+}
+
+golang {
+    packageName = 'github.com/ethankhall/version-manager-clients/cli'
+
+    dependencies {
+        build 'github.com/spf13/cobra'
+    }
+
+    build {
+        definitions = [
+                "${ group }/bar.artifactId": "${ group }:${ name }:${ version }",
+                "main.artifactId"          : name,
+                "main.version"             : version,
+                "main.groupId"             : group,
+        ]
+    }
+}
