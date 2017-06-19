@@ -21,7 +21,6 @@ review the help for each individual command.`,
 }
 
 func init() {
-
 	RootCmd.AddCommand(createCmd)
 	createCmd.MarkPersistentFlagRequired("api-token")
 	createCmd.AddCommand(create.CreateProjectCmd)

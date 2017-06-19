@@ -8,20 +8,15 @@ import (
 	"errors"
 )
 
-type SharedRequest struct {
-	server string
-	token  string
-}
-
 type PostRequest struct {
-	sharedRequest SharedRequest
+	sharedRequest ServiceDetails
 	path          string
 	body          string
 	contentType   string
 }
 
 func MakePostRequestWithoutBody(server string, token string, path string) PostRequest {
-	return PostRequest{sharedRequest: SharedRequest{server, token}, path: path}
+	return PostRequest{sharedRequest: ServiceDetails{server, token}, path: path}
 }
 
 func (request PostRequest) MakePostRequest() (string, error) {

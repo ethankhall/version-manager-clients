@@ -7,6 +7,10 @@ golang {
 
     dependencies {
         build 'github.com/spf13/cobra'
+        build 'gopkg.in/src-d/go-git.v4'
+        tool 'github.com/golang/lint/golint'
+        tool 'github.com/sqs/goreturns'
+        tool 'github.com/tpng/gopkgs'
     }
 
     build {
