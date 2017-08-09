@@ -1,0 +1,16 @@
+[package]
+name = "crom"
+version = "0.1.0"
+authors = ["Ethan Hall <ethan@ehdev.io>"]
+
+[lib]
+name = "crom"
+path = "src/crom/lib.rs"
+
+[dependencies]
+hyper = "0.11.2"
+clap = {version = "~2.26.0", features = ["yaml"]}
+slog = "2.0.6"
+slog-term = "2.1.0"
+slog-async = "2.1.0"
+yaml-rust = "0.3.5"

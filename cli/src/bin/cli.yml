@@ -1,0 +1,32 @@
+name: crom
+author: Ethan Hall <ethan@ehdev.io>
+about: Accounts for _your_ versions
+args:
+    - config:
+        short: c
+        long: config
+        value_name: FILE
+        help: Sets a custom config file
+        takes_value: true
+    - verbose:
+        short: v
+        multiple: true
+        help: Sets the level of verbosity
+    - quite:
+        short: q
+        multiple: false
+        help: When set, only error and warning statements will be printed. Overrides the verbose argument
+settings:
+  - subcommandrequiredelsehelp
+subcommands:
+    - get:
+        about: Gets a version
+        args:
+          - NAME:
+              help: "The name of the repo. Example: `foo/bar`"
+              required: true
+              index: 1
+          - ID:
+              help: The version ID to look up. Can either be version number, commit ID, or `latest` for latest.
+              required: true
+              index: 2
